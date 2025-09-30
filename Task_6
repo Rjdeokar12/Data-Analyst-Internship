@@ -1,0 +1,77 @@
+-- Sales Trend Analysis
+
+Select * from online_sales;
+
+SELECT 
+	EXTRACT(Year FROM `Date`) AS Year,
+    EXTRACT(Month FROM `Date`) AS Month,
+    FORMAT(SUM(`Total Revenue`), 2) as Total_Revenue,
+    COUNT(DISTINCT `Transaction id`) AS Order_volumne
+FROM online_sales
+GROUP BY 
+	EXTRACT(Year FROM `Date`),
+    EXTRACT(Month FROM `Date`)
+ORDER BY  
+	year asc,
+    month asc;
+	
+SELECT 
+    EXTRACT(MONTH FROM `Date`) AS MONTH,
+    FORMAT(SUM(`Total Revenue`), 2) as Total_Revenue,
+    COUNT(DISTINCT `Transaction id`) AS Order_Volume
+FROM online_sales
+WHERE EXTRACT(Year FROM `Date`) = 2024
+GROUP BY EXTRACT(Month FROM `Date`)
+ORDER BY Month ASC;
+
+SELECT 
+	EXTRACT(Year FROM `Date`) AS Year,
+    EXTRACT(Month FROM `Date`) AS Month,
+    FORMAT(SUM(`Total Revenue`), 2) as Total_Revenue,
+    COUNT(DISTINCT `Transaction id`) AS Order_volumne
+FROM online_sales
+WHERE `Date` BETWEEN '2024-01-01' AND '2024-12-31'
+GROUP BY 
+	EXTRACT(Year FROM `Date`),
+    EXTRACT(Month FROM `Date`)
+ORDER BY  
+	Year ASC,
+    Month ASC;
+	
+SELECT 
+	Region, 
+    FORMAT(SUM(`Total Revenue`), 2) AS Total_Revenue
+    FROM online_sales
+GROUP BY Region
+ORDER BY 
+	Region ASC;
+    
+SELECT 
+    `Date`,
+    SUM(`Total Revenue`) AS Revenue,
+    COUNT(DISTINCT `Transaction id`) AS Order_volume
+FROM online_sales
+GROUP BY `Date`
+ORDER BY `Date` ASC;
+
+SELECT 
+    EXTRACT(YEAR FROM `Date`) AS Year,
+    EXTRACT(QUARTER FROM `Date`) AS Quarter,
+    SUM(`Total revenue`) AS Revenue,
+    COUNT(DISTINCT `Transaction id`) AS order_volume
+FROM online_sales
+GROUP BY 
+    EXTRACT(YEAR FROM `Date`),
+    EXTRACT(QUARTER FROM `Date`)
+ORDER BY 
+    Year ASC,
+    Quarter ASC;
+
+SELECT 
+    `Product Name`,
+    SUM(`Total Revenue`) AS Revenue,
+    COUNT(DISTINCT `Transaction id`) AS Order_Volume
+FROM online_sales
+GROUP BY `Product Name`
+ORDER BY Revenue DESC
+LIMIT 10;
